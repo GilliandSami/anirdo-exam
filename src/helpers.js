@@ -10,4 +10,4 @@ const activateLink = (id) => {
   document.querySelector(`nav a[href="${id}"]`)?.classList.add('active')
 }
 
-export {displaySection, activateLink}
+export { displaySection, activateLink }

@@ -1,34 +1,47 @@
-import {displaySection, activateLink} from './helpers.js'
+import './elements/annonce-item.js';
+import './elements/categorie-item.js';
+
+import { displayAds, displayAdsCategorie, displayFavoriteAds, displayUneAnnonce } from './sections/annonces.js';
+import { displayCategories } from './sections/categories.js';
+import { displaySection, activateLink } from './helpers.js'
 
 
 const routeur = () => {
   const hash = window.location.hash || '#home'
   const hashs = hash.split('-')
 
-  // Colorie le lien
   activateLink(hashs[0])
 
-  switch(hashs[0]) {
+  switch (hashs[0]) {
     case '#latest':
-        displaySection('annonces')
-    break;
-
+      displaySection('annonces');
+      displayAds();
+      break;
+    case '#annonces':
+      displaySection('annonce-details');
+      displayUneAnnonce(hashs[1]);
+      break
     case '#categories':
-      displaySection('categories')
-    break;
+      if (hashs[1]) {
+        displaySection('annonces');
+        displayAdsCategorie(hashs[1]);
+      } else {
+        displaySection('categories')
+        displayCategories();
+      }
+      break;
 
     case '#starred':
       displaySection('annonces')
-    break;
+      displayFavoriteAds();
+      break;
 
     case '#account':
       displaySection('account')
-    break;
+      break;
   }
 }
 
-// On veut être averti des changements
-window.addEventListener('hashchange', routeur)
+window.addEventListener('hashchange', routeur);
 
-// on exécute une première fois au chargement de la page pour afficher la bonne section
-routeur()
+routeur();
